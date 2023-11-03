@@ -1,0 +1,564 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+  \setmainfont[]{Inter}
+  \setsansfont[]{Inter}
+  \setmathfont[]{Fira Math}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
+  
+\fi
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{amsmath, xparse}
+\usepackage{fancyvrb, fvextra}
+\usepackage{unicode-math}
+\usepackage{svg}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{systeme}
+\usepackage{xifthen}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
+\newcommand\rowop[1]{\scriptstyle\smash{\xrightarrow[\vphantom{#1}]{\mkern-4mu#1\mkern-4mu}}}
+\DeclareDocumentCommand\converttorows%
+{>{\SplitList{,}}m}%
+{\ProcessList{#1}{\converttorow}}
+\NewDocumentCommand{\converttorow}{m}
+{\ifthenelse{\isempty{#1}}{}{\rowop{#1}}\\}
+
+\DeclareDocumentCommand \rowops{m}
+{\;
+\begin{matrix}
+\converttorows {#1}
+\end{matrix}
+\; }
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+\input{./title.tex}
+\newpage
+
+\renewcommand*\contentsname{Table of Contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{4}
+\tableofcontents
+}
+\newpage{}
+
+\section{Determine whether this set is a vector space. Show the work for
+all ten axioms from 4.1, including closure under addition and scalar
+multiplication.}\label{determine-whether-this-set-is-a-vector-space.-show-the-work-for-all-ten-axioms-from-4.1-including-closure-under-addition-and-scalar-multiplication.}
+
+\textbf{The set of all triples of real numbers, \((x, y, z)\) with the
+\ul{normal rules for vector addition}, but scalar multiplication defined
+by:} \begin{align*}
+\mathbf{k(x, y, z) = (k^3x, k^3y, k^3z)}
+\end{align*}
+
+\subsection{Closure under addition}\label{closure-under-addition}
+
+Let \(V = \{(x, y, z) \ \vert \ x, y, z \in \mathbb{R}\}\) and
+\((x_2, y_2, z_2)\) be arbitrary elements in \(V\). Their sum under the
+given conditions is \((x+x_2, y+y_2, z+z_2)\). This operation satisfies
+the normal rules of vector addition for all \(x, y, z\) and
+\(x_2, y_2, z_2 \in \mathbb{R}.\) Therefore, \(V\) is closed under
+addition.
+
+\subsection{Closure under scalar
+multiplication}\label{closure-under-scalar-multiplication}
+
+For the previously described set \(V\), let
+\(\mathbf{v} = (x,y,z) \ \vert \ x, y, z \in \mathbb{R}\) be an
+arbitrary element in \(V\), and let \(k\) be a scalar. The operation
+\(\mathbf{kv} = (k^3x,k^3y,k^3z)\) is still in \(V\) for any
+\(k \in \mathbb{R}\). Therefore, \(V\) is closed under scalar
+multiplication.
+
+\subsection{\texorpdfstring{A1. \(u+(v+w)=(u+v)+w\) for all
+\(u,v,w \in V\)}{A1. u+(v+w)=(u+v)+w for all u,v,w \textbackslash in V}}\label{a1.-uvwuvw-for-all-uvw-in-v}
+
+For any \(u = (x_1, y_1, z_1), v = (x_2, y_2, z_2),\) and
+\(w = (x_3, y_3, z_3)\) in \(V\), the left-hand side of the equation is:
+\begin{align*}
+u+(v+w) &= (x_1, y_1, z_1) + ((x_2, y_2, z_2) + (x_3, y_3, z_3)) \\
+&= (x_1, y_1, z_1) + (x_2+x_3, y_2+y_3, z_2+z_3) \\
+&= (x_1+(x_2+x_3), y_1+(y_2+y_3), z_1+(z_2+z_3)) \\
+&= (x_1+x_2+x_3, y_1+y_2+y_3, z_1+z_2+z_3)
+\end{align*} The right-hand side of the equation is: \begin{align*}
+(u+v)+w &= ((x_1, y_1, z_1) + (x_2, y_2, z_2)) + (x_3, y_3, z_3) \\
+&= (x_1+x_2, y_1+y_2, z_1+z_2) + (x_3, y_3, z_3) \\
+&= ((x_1+x_2)+x_3, (y_1+y_2)+y_3, (z_1+z_2)+z_3) \\
+&= (x_1+x_2+x_3, y_1+y_2+y_3, z_1+z_2+z_3)
+\end{align*} Since the left-hand side of the equation is equal to the
+right-hand side of the equation, \(u+(v+w)=(u+v)+w\) for all
+\(u,v,w \in V\).
+
+\subsection{\texorpdfstring{A2. \(u+v = v+u\) for all
+\(u,v \in V\)}{A2. u+v = v+u for all u,v \textbackslash in V}}\label{a2.-uv-vu-for-all-uv-in-v}
+
+For any \(u=(x_1,y_1,z_1)\) and \(v=(x_2,y_2,z_2)\) in \(V\), the
+left-hand side of the equation is: \begin{align*}
+u+v &= (x_1, y_1, z_1) + (x_2, y_2, z_2) \\
+&= (x_1+x_2, y_1+y_2, z_1+z_2)
+\end{align*} The right-hand side of the equation is: \begin{align*}
+v+u &= (x_2, y_2, z_2) + (x_1, y_1, z_1) \\
+&= (x_2+x_1, y_2+y_1, z_2+z_1)
+\end{align*} Since the left-hand side of the equation is equal to the
+right-hand side of the equation, \(u+v = v+u\) for all \(u,v \in V\).
+
+\subsection{\texorpdfstring{A3. There exists an element \(0 \in V\) such
+that \(v+0=v\) for all
+\(v \in V\)}{A3. There exists an element 0 \textbackslash in V such that v+0=v for all v \textbackslash in V}}\label{a3.-there-exists-an-element-0-in-v-such-that-v0v-for-all-v-in-v}
+
+The additive identity of \(V\) is \((0,0,0)\). For any
+\(v=(x, y, z) \in V\), we have: \begin{align*}
+v + (0, 0, 0) = (x + 0, y + 0, z + 0) = (x, y, z) = v
+\end{align*}
+
+\subsection{\texorpdfstring{A4. For every \(v \in V\), there exists an
+element \(w \in V\) such that
+\(v+w=0\)}{A4. For every v \textbackslash in V, there exists an element w \textbackslash in V such that v+w=0}}\label{a4.-for-every-v-in-v-there-exists-an-element-w-in-v-such-that-vw0}
+
+For any \(v = (x, y, z) \in V\), its additive inverse is
+\((-x, -y, -z)\) because: \begin{align*}
+v + (-x, -y, -z) = (x + (-x), y + (-y), z + (-z)) = (0, 0, 0) = 0
+\end{align*}
+
+\subsection{\texorpdfstring{S1. \((xy)\mathbf{v}=x(y\mathbf{v})\) for
+all \(x,y \in \mathbb{R}\),
+\(\mathbf{v} \in V\)}{S1. (xy)\textbackslash mathbf\{v\}=x(y\textbackslash mathbf\{v\}) for all x,y \textbackslash in \textbackslash mathbb\{R\}, \textbackslash mathbf\{v\} \textbackslash in V}}\label{s1.-xymathbfvxymathbfv-for-all-xy-in-mathbbr-mathbfv-in-v}
+
+For any \(x, y \in \mathbb{R}\) and \(v = (x_1, y_1, z_1)\) in \(V\),
+the left-hand side of the equation is: \begin{align*}
+(xy)\mathbf{v} = (xy)^3(x_1, y_1, z_1) = (x^3y^3x_1, x^3y^3y_1, x^3y^3z_1)\end{align*}
+The right-hand side of the equation is: \begin{align*}
+x(y\mathbf{v}) = x(y^3x_1, y^3y_1, y^3z_1) = (x^3y^3x_1, x^3y^3y_1, x^3y^3z_1)
+\end{align*} Since both sides are equal, S1 is satisfied.
+
+\subsection{\texorpdfstring{S2.
+\((x+y)\mathbf{v} = x\mathbf{v} + y\mathbf{v}\) for all
+\(x,y \in \mathbb{R}\),
+\(\mathbf{v} \in V\)}{S2. (x+y)\textbackslash mathbf\{v\} = x\textbackslash mathbf\{v\} + y\textbackslash mathbf\{v\} for all x,y \textbackslash in \textbackslash mathbb\{R\}, \textbackslash mathbf\{v\} \textbackslash in V}}\label{s2.-xymathbfv-xmathbfv-ymathbfv-for-all-xy-in-mathbbr-mathbfv-in-v}
+
+For any \(x, y \in \mathbb{R}\) and \(v = (x_1, y_1, z_1) \in V\), the
+left-hand side of the equation is: \begin{align*}
+(x+y)\mathbf{v} &= (x+y)^3(x_1, y_1, z_1) = (x^3+3x^2y+3xy^2+y^3)(x_1, y_1, z_1) \\
+&= (x^3x_1+3x^2yx_1+3xy^2x_1+y^3x_1, x^3y_1+3x^2yy_1+3xy^2y_1+y^3y_1, x^3z_1+3x^2yz_1+3xy^2z_1+y^3z_1)
+\end{align*} The right-hand side of the equation is: \begin{align*}
+x\mathbf{v} + y\mathbf{v} &= x^3(x_1, y_1, z_1) + y^3(x_1, y_1, z_1) \\
+&= (x^3x_1, x^3y_1, x^3z_1) + (y^3x_1, y^3y_1, y^3z_1) \\
+&= (x^3x_1+y^3x_1, x^3y_1+y^3y_1, x^3z_1+y^3z_1)
+\end{align*} Both sides are \textbf{not} equal, so S2 is \textbf{not}
+satisfied. Therefore, \(V\) is \textbf{not} a vector space.
+
+\subsection{\texorpdfstring{S3.
+\(x(\mathbf{v+w}) = x\mathbf{v} + x\mathbf{w}\) for all
+\(x \in \mathbb{R}\),
+\(\mathbf{v,w} \in V\)}{S3. x(\textbackslash mathbf\{v+w\}) = x\textbackslash mathbf\{v\} + x\textbackslash mathbf\{w\} for all x \textbackslash in \textbackslash mathbb\{R\}, \textbackslash mathbf\{v,w\} \textbackslash in V}}\label{s3.-xmathbfvw-xmathbfv-xmathbfw-for-all-x-in-mathbbr-mathbfvw-in-v}
+
+For any \(x \in \mathbb{R}\) and
+\(v = (x_1, y_1, z_1), w = (x_2, y_2, z_2) \in V\), the left-hand side
+of the equation is: \begin{align*}
+x(\mathbf{v+w}) &= x((x_1, y_1, z_1) + (x_2, y_2, z_2)) \\
+&= x(x_1+x_2, y_1+y_2, z_1+z_2) \\
+&= x(x_1+x_2, y_1+y_2, z_1+z_2) \\
+&= (xx_1+xx_2, xy_1+xy_2, xz_1+xz_2)
+\end{align*} The right-hand side of the equation is: \begin{align*}
+x\mathbf{v} + x\mathbf{w} &= x(x_1, y_1, z_1) + x(x_2, y_2, z_2) \\
+&= (xx_1, xy_1, xz_1) + (xx_2, xy_2, xz_2) \\
+&= (xx_1+xx_2, xy_1+xy_2, xz_1+xz_2)
+\end{align*} Since both sides are equal, S3 is satisfied.
+
+\subsection{\texorpdfstring{S4. \(1\mathbf{v} = \mathbf{v}\) for all
+\(\mathbf{v} \in V\)}{S4. 1\textbackslash mathbf\{v\} = \textbackslash mathbf\{v\} for all \textbackslash mathbf\{v\} \textbackslash in V}}\label{s4.-1mathbfv-mathbfv-for-all-mathbfv-in-v}
+
+For any \(v = (x, y, z) \in V\), the left-hand side of the equation is:
+\begin{align*}
+1\mathbf{v} = 1^3(x, y, z) = (x, y, z) = v
+\end{align*} Since scalar multiplication by 1 does not change the
+vector, S4 is satisfied.
+
+\newpage{}
+
+\section{\texorpdfstring{Let \(V\) be the set of all ordered triples of
+real numbers, and define vector addition of
+\(\mathbf{u} = (u_1, u_2, u_3)\) and \(\mathbf{v} = (v_1, v_2, v_3)\)
+as}{Let V be the set of all ordered triples of real numbers, and define vector addition of \textbackslash mathbf\{u\} = (u\_1, u\_2, u\_3) and \textbackslash mathbf\{v\} = (v\_1, v\_2, v\_3) as}}\label{let-v-be-the-set-of-all-ordered-triples-of-real-numbers-and-define-vector-addition-of-mathbfu-u_1-u_2-u_3-and-mathbfv-v_1-v_2-v_3-as}
+
+\begin{align*}
+\mathbf{u+v} = (u_1+v_1+7, u_2+v_2,u_3+v_3-16)
+\end{align*}
+
+\subsection{\texorpdfstring{What is the zero vector, \textbf{0} of
+\(V\)?}{What is the zero vector, 0 of V?}}\label{what-is-the-zero-vector-0-of-v}
+
+To find the zero vector of \(V\), we need to find an ordered triple
+\((x, y, z)\) that, when added to any vector \((u_1, u_2, u_3) \in V\),
+the result is still \((u_1, u_2, u_3)\). In other words, we need to find
+\(x, y, z\) such that the following equations hold for any
+\(u_1, u_2, u_3 \in \mathbb{R}\) by substituting \((x, y, z)\) into
+\((v_1, v_2, v_3)\), respectively: \begin{align*}
+u_1 + x + 7 &= u_1 \\
+u_2 + y &= u_2 \\ 
+u_3 + z - 16 &= u_3
+\end{align*} Although we could use an augmented matrix to solve this
+system of equations, it is trivial to see that \(x=-7, y=0,\) and
+\(z=16\) is the solution to the system. Therefore, the zero vector of
+\(V\) is \((-7, 0, 16)\)
+
+\subsection{\texorpdfstring{What is the additive inverse of \textbf{u}
+in
+\(V\)?}{What is the additive inverse of u in V?}}\label{what-is-the-additive-inverse-of-u-in-v}
+
+The additive inverse of a vector \(\mathbf{u} = (u_1, u_2, u_3) \in V\)
+is a vector \(-\mathbf{u}\) such that
+\(\mathbf{u} + (-\mathbf{u}) = 0\). Because we know that the zero vector
+of \(V\) is \((-7, 0, 16)\), we can rearrange for \(-\mathbf{u}\) as
+follows: \begin{align*}
+\mathbf{u} + (-\mathbf{u}) &= (-7, 0, 16) \\
+(-\mathbf{u}) &= (-7, 0, 16) - \mathbf{u} \\
+(-\mathbf{u}) &= (-7-u_1, 0-u_2, 16-u_3) \\
+(-\mathbf{u}) &= (-u_1-7, -u_2, -u_3+16)
+\end{align*} Therefore, the additive inverse of
+\(\mathbf{u} = (u_1, u_2, u_3)\) in \(V\) is
+\((-u_1-7, -u_2, -u_3+16)\).
+
+\newpage{}
+
+\section{\texorpdfstring{Let \(Q\) be the vector space of polynomials in
+the form: \(\mathbf{a_0+a_1x+a_2x^2+a_3x^3+a_4x^4}\). Let \(P\) be a
+subset of \(Q\), and be polynomials of the form:
+\(\mathbf{b_0+b_1x^2+b_2x^4}\). \textbf{Show that \(P\) is a subspace of
+\(Q\) and explain your
+reasoning.}}{Let Q be the vector space of polynomials in the form: \textbackslash mathbf\{a\_0+a\_1x+a\_2x\^{}2+a\_3x\^{}3+a\_4x\^{}4\}. Let P be a subset of Q, and be polynomials of the form: \textbackslash mathbf\{b\_0+b\_1x\^{}2+b\_2x\^{}4\}. Show that P is a subspace of Q and explain your reasoning.}}\label{let-q-be-the-vector-space-of-polynomials-in-the-form-mathbfa_0a_1xa_2x2a_3x3a_4x4.-let-p-be-a-subset-of-q-and-be-polynomials-of-the-form-mathbfb_0b_1x2b_2x4.-show-that-p-is-a-subspace-of-q-and-explain-your-reasoning.}
+
+\subsection{\texorpdfstring{The zero vector of \(Q\) is in
+\(P\):}{The zero vector of Q is in P:}}\label{the-zero-vector-of-q-is-in-p}
+
+The zero vector of \(Q\) is the polynomial
+\(0 + 0x + 0x^2 + 0x^3 + 0x^4\), which can be written as
+\(0 + 0x^2 + 0x^4\). This polynomial is in the form required for \(P\),
+so the zero vector of \(Q\) is in \(P\).
+
+\subsection{\texorpdfstring{\(P\) is closed under
+addition:}{P is closed under addition:}}\label{p-is-closed-under-addition}
+
+Let \(p_1(x) = b_0^{(1)} + b_1^{(1)}x^2 + b_2^{(1)}x^4\) and
+\(p_2(x) = b_0^{(2)} + b_1^{(2)}x^2 + b_2^{(2)}x^4\) be two polynomials
+in \(P\). Their sum is: \begin{align*}
+p_1(x) + p_2(x) = (b_0^{(1)} + b_0^{(2)}) + (b_1^{(1)} + b_1^{(2)})x^2 + (b_2^{(1)} + b_2^{(2)})x^4
+\end{align*} This is also in the form required for \(P\), so \(P\) is
+closed under addition.
+
+\subsection{\texorpdfstring{\(P\) is closed under scalar
+multiplication:}{P is closed under scalar multiplication:}}\label{p-is-closed-under-scalar-multiplication}
+
+Let \(c\) be a scalar, and let \(p(x) = b_0 + b_1x^2 + b_2x^4\) be a
+polynomial in \(P\). When we multiply \(p(x)\) by \(c\), we get:
+\begin{align*}
+cp(x) = cb_0 + cb_1x^2 + cb_2x^4
+\end{align*} This is also in the form required for \(P\), so \(P\) is
+closed under scalar multiplication.
+
+Since \(P\) satisfies all three properties, it is a subspace of \(Q\).
+
+\newpage{}
+
+\section{\texorpdfstring{Let
+\(v_1 = (2, 1, 0, 3), v_2 = (3, -1, 5, 2)\), and
+\(v_3 = (-1, 0, 2, 1)\).}{Let v\_1 = (2, 1, 0, 3), v\_2 = (3, -1, 5, 2), and v\_3 = (-1, 0, 2, 1).}}\label{let-v_1-2-1-0-3-v_2-3--1-5-2-and-v_3--1-0-2-1.}
+
+\subsection{\texorpdfstring{Is the vector \((0, 0, 0, 0)\) in
+\(\mathrm{span}\{v_1,v_2,v_3\}\)?}{Is the vector (0, 0, 0, 0) in \textbackslash mathrm\{span\}\textbackslash\{v\_1,v\_2,v\_3\textbackslash\}?}}\label{is-the-vector-0-0-0-0-in-mathrmspanv_1v_2v_3}
+
+The zero vector is always in the span of any vector combination by
+letting the combination coefficients all be 0.
+
+\subsection{\texorpdfstring{Is the vector \((1, 1, 1, 1)\) in
+\(\mathrm{span}\{v_1,v_2,v_3\}\)?}{Is the vector (1, 1, 1, 1) in \textbackslash mathrm\{span\}\textbackslash\{v\_1,v\_2,v\_3\textbackslash\}?}}\label{is-the-vector-1-1-1-1-in-mathrmspanv_1v_2v_3}
+
+There must exist scalars \(a, b, c\) such that: \begin{align*}
+a\begin{bmatrix}2 \\ 1 \\ 0 \\ 3\end{bmatrix} + b\begin{bmatrix}3 \\ -1 \\ 5 \\ 2\end{bmatrix} + c\begin{bmatrix}-1 \\ 0 \\ 2 \\ 1\end{bmatrix} = \begin{bmatrix}1 \\ 1 \\ 1 \\ 1\end{bmatrix}
+\end{align*} From this, we can create the following system of equations:
+\begin{align*}
+\systeme*{2a+3b-c=1,a-b=1,5b+2c=1,3a+2b+c=1} \Rightarrow \left[\begin{array}{ccc|c}2 & 3 & -1 & 1 \\ 1 & -1 & 0 & 1 \\ 0 & 5 & 2 & 1 \\ 3 & 2 & 1 & 1\end{array}\right]\rowops{\frac{1}{2}R_1,,,} \left[\begin{array}{ccc|c}1&\frac{3}{2}&-\frac{1}{2} & \frac{1}{2}\\ 1 & -1 & 0 & 1 \\ 0 & 5 & 2 & 1 \\ 3 &2 & 1 & 1\end{array}\right]\rowops{,R_2-R_1,,R_4-3R_1}\left[\begin{array}{ccc|c}1&\frac{3}{2}&-\frac{1}{2} & \frac{1}{2}\\ 0 & -\frac{5}{2} & \frac{1}{2} & \frac{1}{2} \\ 0 & 5 & 2 & 1 \\ 0 & -\frac{5}{2} & \frac{5}{2} & -\frac{1}{2}\end{array}\right] \\
+\rowops{,-\frac{2}{5}R_2,,}\left[\begin{array}{ccc|c}1&\frac{3}{2}&-\frac{1}{2}&\frac{1}{2}\\ 0 & 1 & -\frac{1}{5} & -\frac{1}{5} \\ 0 & 5 & 2 & 1 \\ 0 & -\frac{5}{2} & \frac{5}{2} & -\frac{1}{2}\end{array}\right]\rowops{,,R_3-5R_2,R_4+\frac{5}{2}R_2}\left[\begin{array}{ccc|c}1&\frac{3}{2}&-\frac{1}{2}&\frac{1}{2}\\ 0 & 1 & -\frac{1}{5} & -\frac{1}{5} \\ 0 & 0 & 3 & 2 \\ 0 & 0 & 2 & -1\end{array}\right] \Rightarrow \left[\begin{array}{ccc|c}1 & \frac{3}{2} & -\frac{1}{2} & \frac{1}{2} \\ 0 & 1 & -\frac{1}{5} & -\frac{1}{5} \\ 0 & 0 & 5 & 1\end{array}\right] \Rightarrow \systeme*{a+\frac{3}{2}b-\frac{1}{2}c=\frac{1}{2},b-\frac{1}{5}c=-\frac{1}{5},5c=1} \\
+\end{align*} Since this is a consistent system, the vector
+\((1, 1, 1, 1)\) is in \(\mathrm{span}\{v_1,v_2,v_3\}\).
+
+\newpage{}
+
+\section{\texorpdfstring{Is the following set of \(2 \times 2\) matrices
+linearly independent? Explain why or why
+not.}{Is the following set of 2 \textbackslash times 2 matrices linearly independent? Explain why or why not.}}\label{is-the-following-set-of-2-times-2-matrices-linearly-independent-explain-why-or-why-not.}
+
+We need to check if the only solution to the equation
+\(aA + bB + cC = \begin{bmatrix}0&0\\0&0\end{bmatrix}\) is
+\(a = b = c = 0\). Let's set up the equation: \begin{align*}
+a \begin{bmatrix}1&2\\1&2\end{bmatrix} + b \begin{bmatrix}-2&5\\6&8\end{bmatrix} + c \begin{bmatrix}5&4\\7&7\end{bmatrix}
+\end{align*} This leads to the following system: \begin{align*}
+a - 2b + 5c &= 0 \quad \text{(for the first row, first column)} \\
+2a + 5b + 4c &= 0 \quad \text{(for the first row, second column)} \\
+a + 6b + 7c &= 0 \quad \text{(for the second row, first column)} \\
+2a + 8b + 7c &= 0 \quad \text{(for the second row, second column)}
+\end{align*} Now, we can write the system in matrix form. For the
+coefficient matrix \(A\), the system only has a non-trivial solution
+\(\iff \det{A} \ne 0\). Let's find the determinant of \(A\):
+\begin{align*}
+\text{det}(A) = \begin{vmatrix} 1 & -2 & 5 \\ 2 & 5 & 4 \\ 1 & 6 & 7 \end{vmatrix}
+\end{align*} Expanding the determinant along the first row:
+\begin{align*}
+\text{det}(A) = 1 \times \begin{vmatrix} 5 & 4 \\ 6 & 7 \end{vmatrix} - (-2) \times \begin{vmatrix} 2 & 4 \\ 1 & 7 \end{vmatrix} + 5 \times \begin{vmatrix} 2 & 5 \\ 1 & 6 \end{vmatrix}
+\end{align*} Evalulating the determinants inside: \begin{align*}
+\text{det}(A) &= (1 \times (5 \times 7 - 4 \times 6)) - (-2 \times (2 \times 7 - 4 \times 1)) + (5 \times (2 \times 6 - 5 \times 1)) \\
+&= (1 \times 3) - (-2 \times 10) + (5 \times 7) \\
+&= 11 + 20 + 35 \\
+&= 66
+\end{align*} Therefore, the set is \textbf{linearly independent}.
+
+\subsection{If you can, write one of them as a linear combination of the
+other two. Show all work, and if you can't, explain
+why.}\label{if-you-can-write-one-of-them-as-a-linear-combination-of-the-other-two.-show-all-work-and-if-you-cant-explain-why.}
+
+Let's set up the equations \(aB + bC = A\): \begin{align*}
+a \begin{bmatrix}-2&5\\6&8\end{bmatrix} + b \begin{bmatrix}5&4\\7&7\end{bmatrix} = \begin{bmatrix}1&2\\1&2\end{bmatrix}
+\end{align*} This leads to the following system: \begin{align*}
+-2a + 5b &= 1 \quad \text{(for the first row, first column)} \\
+6a + 4b &= 2 \quad \text{(for the first row, second column)} \\
+5a + 7b &= 1 \quad \text{(for the second row, first column)} \\
+7a + 7b &= 2 \quad \text{(for the second row, second column)}
+\end{align*} We can subtract the first equation from the second equation
+to get \(7a+2b=0\). However, this equation contradicts the second row of
+the given matrix \(A\). Therefore, there are \textbf{no constants}
+\(a, b,\) and \(c\) such that \(aB + bC = A\).
+
+\newpage{}
+
+\section{\texorpdfstring{Justify \emph{why} each of the following is
+true or
+false:}{Justify why each of the following is true or false:}}\label{justify-why-each-of-the-following-is-true-or-false}
+
+\subsection{\texorpdfstring{A finite set with at least two vectors and
+contains \textbf{0} can be linearly
+independent.}{A finite set with at least two vectors and contains 0 can be linearly independent.}}\label{a-finite-set-with-at-least-two-vectors-and-contains-0-can-be-linearly-independent.}
+
+\textbf{False:} If the set contains the zero vector, it is linearly
+dependent by default.
+
+\subsection{\texorpdfstring{If two sets span the same subspace of a
+vector space \(V\), then those sets must be the same
+set.}{If two sets span the same subspace of a vector space V, then those sets must be the same set.}}\label{if-two-sets-span-the-same-subspace-of-a-vector-space-v-then-those-sets-must-be-the-same-set.}
+
+\textbf{False:} Two sets can span the same subspace without being the
+same set. Consider the vector space \(V = \mathbb{R}^2\). The sets
+\(\{(1, 0), (0, 1)\}\) and \(\{(1,0), (1,1)\}\) both span
+\(\mathbb{R^2}\), but the sets are different.
+
+\subsection{\texorpdfstring{The polynomials \(x-1, (x-1)^2,\) and
+\((x-1)^3\) span the set of all polynomials of degree
+3.}{The polynomials x-1, (x-1)\^{}2, and (x-1)\^{}3 span the set of all polynomials of degree 3.}}\label{the-polynomials-x-1-x-12-and-x-13-span-the-set-of-all-polynomials-of-degree-3.}
+
+\textbf{True:} They form a basis for the set of all polynomials of
+degree 3. Any polynomial of degree 3 can be expressed as
+\(a(x-1)^3 + b(x-1)^2 + c(x-1)\), where \(a, b,\) and \(c\) are
+constants.
+
+\subsection{\texorpdfstring{A set with exactly two vectors is linearly
+independent \(\iff\) the vectors are not scalar multiples of each
+other}{A set with exactly two vectors is linearly independent \textbackslash iff the vectors are not scalar multiples of each other}}\label{a-set-with-exactly-two-vectors-is-linearly-independent-iff-the-vectors-are-not-scalar-multiples-of-each-other}
+
+\textbf{True:} A set with two vectors \(\mathbf{v_1}\) and
+\(\mathbf{v_2}\) is linearly independent if and only if one vector is
+not a scalar multiple of the other. The only solution to
+\(c_1\mathbf{v_1} + c_2\mathbf{v_2} = \mathbf{0}\) is \(c_1 = c_2 = 0\).
+If the vectors are scalar multiples, then one can be expressed as
+\(k\mathbf{v_1}=\mathbf{v_2}\) where \(k\) is a scalar, making the set
+is linearly dependent.
+
+\subsection{\texorpdfstring{If the set of vectors \(\{v_1, v_2, v_3\}\)
+is linearly independent, then \(\{kv_1, kv_2, kv_3\}\) is also
+independent for every nonzero scalar
+\(k\).}{If the set of vectors \textbackslash\{v\_1, v\_2, v\_3\textbackslash\} is linearly independent, then \textbackslash\{kv\_1, kv\_2, kv\_3\textbackslash\} is also independent for every nonzero scalar k.}}\label{if-the-set-of-vectors-v_1-v_2-v_3-is-linearly-independent-then-kv_1-kv_2-kv_3-is-also-independent-for-every-nonzero-scalar-k.}
+
+\textbf{True:} If the original set \(\{v_1,v_2,v_3\}\) is linearly
+independent, scaling the vectors by a nonzero scalar \(k\) won't change
+their linear independence because the only solution to
+\(c_1(kv_1) + c_2(kv_2) + c_3(kv_3) = \mathbf{0}\) is
+\(c_1 = c_2 = c_3 = 0\).
+
+\newpage{}
+
+\section{Prove the following:}\label{prove-the-following}
+
+\textbf{Let the vectors \(u, v,\) and \(w\) be in the vector space
+\(V\). The vectors \(u-v\), \(v-w\), and \(w-u\) form a linearly
+dependent set.}
+
+We need to show that there exist constants \(a\), \(b\), and \(c\), not
+all equal to zero, such that: \begin{align*}
+a(u-v)+b(v-w)+c(w-u)=0
+\end{align*} We can start by expanding the left side of the equation and
+simplifying it: \begin{align*}
+(au-av)+(bv+bw)+(cw-cu)=0
+\end{align*} Distribute the constants and regroup the terms:
+\begin{align*}
+au - av + bv - bw + cw - cu &= 0 \\
+(au-cu)+(-av+bv)+(-bw) &= 0 
+\end{align*} Next, factor out common terms: \begin{align*}
+u(a-c)+v(-a+b)+w(-b)=0
+\end{align*} Since we want to show that this equation holds for
+constants \(a\), \(b\), and \(c\), we need to find a solution for \(a\),
+\(b\), and \(c\) that ensures they're not all equal to zero:
+\begin{align*}
+a - c &= 0 \quad \text{(1)} \\
+-a + b &= 0 \quad \text{(2)} \\
+-b &= 0 \quad \text{(3)}
+\end{align*} \ldots However, according to equation (3), we can see that
+\(b\) MUST equal zero. Substituting this into equation (2), we get
+\(-a = 0\), which implies \(a = 0\). Finally, using the value of \(a\)
+in equation (1), we find that \(-c = 0\), which implies \(c = 0\).
+
+Since we've shown that the only solution to the system of equations is
+\(a = b = c = 0\), we can conclude that the vectors \(u - v\),
+\(v - w\), and \(w - u\) are linearly independent.
+
+
+
+\end{document}
